@@ -4,6 +4,7 @@ import android.app.Application
 import br.pprojects.questioncollectionapp.di.mainModule
 import br.pprojects.questioncollectionapp.di.networkModule
 import br.pprojects.questioncollectionapp.di.questionsCollectionModule
+import br.pprojects.questioncollectionapp.di.splashModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -17,6 +18,7 @@ class QuestionsCollectionApplication : Application() {
             androidContext(this@QuestionsCollectionApplication)
             modules(
                 listOf(
+                    splashModule,
                     mainModule,
                     networkModule,
                     questionsCollectionModule

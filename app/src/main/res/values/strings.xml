@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">QuestionCollectionApp</string>
+    <string name="app_title">Questions Collection</string>
 </resources>
