@@ -1,10 +1,8 @@
 package br.pprojects.questioncollectionapp.data.network
 
 import br.pprojects.questioncollectionapp.data.model.Question
-import br.pprojects.questioncollectionapp.data.model.ResultAPI
 import br.pprojects.questioncollectionapp.data.model.Status
 import retrofit2.Call
-import retrofit2.http.Field
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

@@ -4,5 +4,7 @@
     <color name="colorPrimaryDark">#2B6F6F</color>
     <color name="colorAccent">#374E8F</color>
     <color name="white">#FFFFFF</color>
-    <color name="lightGray">#BEBEBE</color>
+    <color name="lightGray">#DBDBDB</color>
+    <color name="mediumGray">#BBBBBB</color>
+    <color name="darkGrey">#707070</color>
 </resources>

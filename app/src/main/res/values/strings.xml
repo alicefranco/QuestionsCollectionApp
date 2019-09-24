@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">QuestionCollectionApp</string>
     <string name="app_title">Questions Collection</string>
+    <string name="search_hint">search</string>
 </resources>
