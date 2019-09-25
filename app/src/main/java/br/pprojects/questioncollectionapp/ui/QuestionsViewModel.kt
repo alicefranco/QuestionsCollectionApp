@@ -11,7 +11,6 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Transformations
 import br.pprojects.questioncollectionapp.data.model.NetworkState
 
-
 class QuestionsViewModel(private val repository: QuestionsRepository) : ViewModel() {
     var loading: LiveData<NetworkState> = MutableLiveData()
     private val pageSize = 10
@@ -39,7 +38,7 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : ViewMode
         return LivePagedListBuilder(questionsDataSourceFactory, config).build()
     }
 
-    fun replaceSubscription(lifecycleOwner: LifecycleOwner, filter: String) {
+    fun replaceSubscription(lifecycleOwner: LifecycleOwner, filter: String? = null) {
         questions.removeObservers(lifecycleOwner)
         questions = searchQuestions(filter)
     }

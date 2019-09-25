@@ -1,6 +1,5 @@
 package br.pprojects.questioncollectionapp.ui
 
-import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,9 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.pprojects.questioncollectionapp.R
 import br.pprojects.questioncollectionapp.data.model.NetworkState
-import br.pprojects.questioncollectionapp.util.createDialog
-import br.pprojects.questioncollectionapp.util.gone
-import br.pprojects.questioncollectionapp.util.visible
+import br.pprojects.questioncollectionapp.data.model.Question
+import br.pprojects.questioncollectionapp.util.*
 import kotlinx.android.synthetic.main.activity_questions.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,6 +26,11 @@ class QuestionsActivity : AppCompatActivity() {
 
         et_search.addTextChangedListener(setupTextWatcher())
 
+        iv_dismiss.setOnClickListener {
+            et_search.setText("")
+            replaceSubscription()
+        }
+
         questionsViewModel.loading.observe(this, Observer {
             when (it) {
                 NetworkState.LOADING -> {
@@ -40,11 +43,19 @@ class QuestionsActivity : AppCompatActivity() {
                 }
                 NetworkState.ERROR -> {
                     pb_questions.gone()
-                    createDialog(this, "ERROR", "ERROR")
+                    rv_questions.visible()
+                    createDialog(this, "ERROR", "An error occurred.")
                 }
                 else -> {}
             }
         })
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount < 1) {
+                cv_search.visible()
+                adapter.setItemClick(itemClick)
+            }
+        }
     }
 
     private fun setupTextWatcher(): TextWatcher {
@@ -63,14 +74,22 @@ class QuestionsActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupRecycler(){
-        adapter = QuestionsAdapter()
+    private fun setupRecycler() {
+        adapter = QuestionsAdapter(this)
+        adapter.setItemClick(itemClick)
         rv_questions.layoutManager = linearLayoutManager
         startListening()
         rv_questions.adapter = adapter
     }
 
-    private fun replaceSubscription(filter: String) {
+    private val itemClick: (question: Question) -> Unit = {
+        adapter.removeItemClick()
+        val fragment = QuestionDetailsFragment.newInstance(it)
+        addFragment(fragment, R.id.questions_list_layout, QuestionDetailsFragment.TAG, true)
+        cv_search.gone()
+    }
+
+    private fun replaceSubscription(filter: String? = null) {
         questionsViewModel.replaceSubscription(this, filter)
         startListening()
     }

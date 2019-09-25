@@ -2,7 +2,6 @@ package br.pprojects.questioncollectionapp.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import br.pprojects.questioncollectionapp.R

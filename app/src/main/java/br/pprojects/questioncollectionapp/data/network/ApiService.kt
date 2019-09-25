@@ -3,9 +3,7 @@ package br.pprojects.questioncollectionapp.data.network
 import br.pprojects.questioncollectionapp.data.model.Question
 import br.pprojects.questioncollectionapp.data.model.Status
 import retrofit2.Call
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
     @GET("/health")
@@ -25,6 +23,12 @@ interface ApiService {
     fun shareQuestion(
         @Query("destination_email") destinationEmail: String,
         @Query("content_url") contentUrl: String
+    ): Call<Status>
+
+    @PUT("/questions/{question_id}")
+    fun updateQuestion(
+        @Path("question_id") questionId: Int,
+        @Body question: Question
     ): Call<Status>
 
     companion object {

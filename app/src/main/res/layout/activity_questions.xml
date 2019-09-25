@@ -4,7 +4,8 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightGray">
+        android:background="@color/lightGray"
+        android:id="@+id/questions_list_layout">
 
     <ProgressBar
             android:id="@+id/pb_questions"
@@ -71,13 +72,13 @@
                     android:autofillHints="@string/search_hint"
                     android:hint="@string/search_hint"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView2"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_dismiss"
                     app:layout_constraintStart_toEndOf="@+id/imageView"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="visible" />
 
             <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/iv_dismiss"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="8dp"

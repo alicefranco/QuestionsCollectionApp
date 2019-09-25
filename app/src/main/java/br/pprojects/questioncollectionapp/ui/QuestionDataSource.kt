@@ -24,7 +24,7 @@ class QuestionDataSource(val filter: String? = null, val repository: QuestionsRe
             networkState.value = NetworkState.LOADING
             val response = repository.listQuestions(PAGE_SIZE, FIRST_ITEM, filter)
 
-            when (response){
+            when (response) {
                 is ResultAPI.Success -> {
                     callback.onResult(response.data, null, FIRST_ITEM + PAGE_SIZE)
                     networkState.value = NetworkState.DONE
@@ -41,7 +41,7 @@ class QuestionDataSource(val filter: String? = null, val repository: QuestionsRe
             networkState.value = NetworkState.LOADING
             val response = repository.listQuestions(PAGE_SIZE, params.key, filter)
 
-            when (response){
+            when (response) {
                 is ResultAPI.Success -> {
                     callback.onResult(response.data, params.key + PAGE_SIZE)
                     networkState.value = NetworkState.DONE
@@ -54,5 +54,4 @@ class QuestionDataSource(val filter: String? = null, val repository: QuestionsRe
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Question>) {}
-
 }
