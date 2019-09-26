@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.util
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource

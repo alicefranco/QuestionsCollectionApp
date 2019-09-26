@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.questionsList
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import br.pprojects.questioncollectionapp.R
 import br.pprojects.questioncollectionapp.data.model.NetworkState
 import br.pprojects.questioncollectionapp.data.model.Question
+import br.pprojects.questioncollectionapp.ui.questionDetails.QuestionDetailsFragment
 import br.pprojects.questioncollectionapp.util.*
 import kotlinx.android.synthetic.main.activity_questions.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -125,8 +126,12 @@ class QuestionsActivity : AppCompatActivity() {
     }
 
     fun openQuestionDetailsScreen(question: Question) {
-        val fragment = QuestionDetailsFragment.newInstance(question)
-        addFragment(fragment, R.id.questions_list_layout, QuestionDetailsFragment.TAG, true)
+        val fragment =
+            QuestionDetailsFragment.newInstance(
+                question
+            )
+        addFragment(fragment, R.id.questions_list_layout,
+            QuestionDetailsFragment.TAG, true)
         cv_search.gone()
     }
 }

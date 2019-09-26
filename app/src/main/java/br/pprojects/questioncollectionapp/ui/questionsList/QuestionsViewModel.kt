@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.questionsList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,6 +11,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Transformations
 import br.pprojects.questioncollectionapp.data.model.NetworkState
 import br.pprojects.questioncollectionapp.data.model.ResultAPI
+import br.pprojects.questioncollectionapp.util.QuestionDataSource
+import br.pprojects.questioncollectionapp.util.QuestionsDataSourceFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -29,7 +31,8 @@ class QuestionsViewModel(private val repository: QuestionsRepository) : ViewMode
     }
 
     fun listQuestions(filter: String? = null): LiveData<PagedList<Question>> {
-        questionsDataSourceFactory = QuestionsDataSourceFactory(filter, repository)
+        questionsDataSourceFactory =
+            QuestionsDataSourceFactory(filter, repository)
         questionsDataSource = questionsDataSourceFactory.questionsLiveDataSource
         loading = Transformations.switchMap(
                     questionsDataSourceFactory.questionsLiveDataSource

@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.questionsList
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,9 @@ import br.pprojects.questioncollectionapp.util.formatString
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_question.view.*
 
-class QuestionsAdapter(private val context: Context) : PagedListAdapter<Question, QuestionsAdapter.ViewHolder>(QuestionsDiffCalback) {
+class QuestionsAdapter(private val context: Context) : PagedListAdapter<Question, QuestionsAdapter.ViewHolder>(
+    QuestionsDiffCalback
+) {
     private var itemClick: (question: Question) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

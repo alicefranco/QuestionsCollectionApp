@@ -11,7 +11,7 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.DayNight">
         <activity
-                android:name=".ui.SplashActivity"
+                android:name=".ui.splashScreen.SplashActivity"
                 android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -19,7 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.QuestionsActivity"
+        <activity android:name=".ui.questionsList.QuestionsActivity"
                 android:label="Questions">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

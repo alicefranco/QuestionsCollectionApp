@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.questionDetails
 
 import android.content.Context
 import android.view.LayoutInflater

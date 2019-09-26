@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.questionDetails
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

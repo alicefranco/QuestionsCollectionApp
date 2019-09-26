@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.questionDetails
 
 import android.content.Intent
 import android.os.Bundle
@@ -57,7 +57,8 @@ class QuestionDetailsFragment : Fragment() {
 
         question?.choices?.let {
             context?.let { context ->
-                adapter = ChoiceAdapter(context, it)
+                adapter =
+                    ChoiceAdapter(context, it)
                 adapter.setRadioButtonClick(radioButtonClick)
                 rv_answers.layoutManager = linearLayoutManager
                 rv_answers.adapter = adapter

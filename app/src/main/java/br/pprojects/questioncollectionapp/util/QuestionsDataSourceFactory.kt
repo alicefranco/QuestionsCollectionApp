@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.util
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.DataSource
@@ -9,7 +9,8 @@ class QuestionsDataSourceFactory(val filter: String? = null, val repository: Que
     var questionsLiveDataSource: MutableLiveData<QuestionDataSource> = MutableLiveData()
 
     override fun create(): DataSource<Int, Question> {
-        val questionDataSource = QuestionDataSource(filter, repository)
+        val questionDataSource =
+            QuestionDataSource(filter, repository)
         questionsLiveDataSource.postValue(questionDataSource)
         return questionDataSource
     }
