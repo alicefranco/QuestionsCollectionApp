@@ -1,0 +1,10 @@
+To set up project do:
+
+- Download latest version of Android Studio
+- Clone repository: 
+ * HTTPS: git clone https://github.com/alicefranco/QuestionsCollectionApp.git
+ * SSH: git clone git@github.com:alicefranco/QuestionsCollectionApp.git
+
+- Open project in Android Studio (folder QuestionCollectionApp)
+
+- Run the project in Android Studio (Shift + F10)
