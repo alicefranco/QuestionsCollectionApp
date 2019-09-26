@@ -49,8 +49,11 @@ class QuestionDataSource(val filter: String? = null, val repository: QuestionsRe
                     callback.onResult(response.data, params.key + PAGE_SIZE)
                     networkState.value = NetworkState.DONE
                 }
-                is ResultAPI.Error, is ResultAPI.InternalError -> {
+                is ResultAPI.Error -> {
                     networkState.value = NetworkState.ERROR
+                }
+                is ResultAPI.InternalError -> {
+                    networkState.value = NetworkState.NO_CONNECTION
                 }
             }
         }

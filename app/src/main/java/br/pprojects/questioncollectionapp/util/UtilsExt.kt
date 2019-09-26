@@ -55,14 +55,3 @@ fun String.formatString(originalFormat: String, finalFormat: String): String {
         return ""
     }
 }
-
-fun createTimer(call: () -> Unit, delay: Long, period: Long) {
-    val timer = Timer()
-    val myTask = object : TimerTask() {
-        override fun run() {
-            call()
-        }
-    }
-
-    timer.schedule(myTask, delay, period)
-}

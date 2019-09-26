@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_questions.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.net.URL
 
-
 class QuestionsActivity : AppCompatActivity() {
     private val questionsViewModel: QuestionsViewModel by viewModel()
     private val linearLayoutManager = LinearLayoutManager(this)
@@ -26,6 +25,21 @@ class QuestionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_questions)
 
+        setupRecycler()
+
+        et_search.addTextChangedListener(setupTextWatcher())
+
+        iv_dismiss.setOnClickListener {
+            et_search.setText("")
+            replaceSubscription()
+        }
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            if (supportFragmentManager.backStackEntryCount < 1) {
+                cv_search.visible()
+                adapter.setItemClick(itemClick)
+            }
+        }
 
         if (intent?.action == Intent.ACTION_VIEW) {
             val uri = intent.data
@@ -35,81 +49,37 @@ class QuestionsActivity : AppCompatActivity() {
             }
         }
 
-        setupRecycler()
-        supportFragmentManager.addOnBackStackChangedListener {
-            if (supportFragmentManager.backStackEntryCount < 1) {
-                cv_search.visible()
-                adapter.setItemClick(itemClick)
-            }
-        }
-
         if (questionId != null) {
             questionsViewModel.searchQuestion(questionId?.toInt() ?: 0)
             questionsViewModel.questionFound.observe(this, Observer {
                 openQuestionDetailsScreen(it)
             })
             questionsViewModel.loadingMutable.observe(this, Observer {
-                when (it) {
-                    NetworkState.LOADING -> {
-                        rv_questions.gone()
-                        pb_questions.visible()
-                    }
-                    NetworkState.DONE -> {
-                        rv_questions.visible()
-                        pb_questions.gone()
-                    }
-                    NetworkState.ERROR -> {
-                        pb_questions.gone()
-                        rv_questions.visible()
-                        createDialog(this, "ERROR", "An error occurred.")
-                    }
-                    NetworkState.NO_CONNECTION -> {
-                        createDialog(this, "ERROR", "Please, check your internet connection.")
-                    }
-                    else -> {
-                    }
-                }
+                showLoading(it)
             })
-
-
         } else {
-
-            et_search.addTextChangedListener(setupTextWatcher())
-
-            iv_dismiss.setOnClickListener {
-                et_search.setText("")
-                replaceSubscription()
-            }
-
             questionsViewModel.loading.observe(this, Observer {
-                when (it) {
-                    NetworkState.LOADING -> {
-                        rv_questions.gone()
-                        pb_questions.visible()
-                    }
-                    NetworkState.DONE -> {
-                        rv_questions.visible()
-                        pb_questions.gone()
-                    }
-                    NetworkState.ERROR -> {
-                        pb_questions.gone()
-                        rv_questions.visible()
-                        createDialog(this, "ERROR", "An error occurred.")
-                    }
-                    NetworkState.NO_CONNECTION -> {
-                        createDialog(this, "ERROR", "Please, check your internet connection.")
-                        createTimer(
-                            {
-                                questionsViewModel.listQuestions()
-                            },
-                            2000,
-                            5000
-                        )
-                    }
-                    else -> {
-                    }
-                }
+                showLoading(it)
             })
+        }
+    }
+
+    private fun showLoading(networkState: NetworkState) {
+        when (networkState) {
+            NetworkState.LOADING -> {
+                loading_layout.visible()
+            }
+            NetworkState.DONE -> {
+                loading_layout.gone()
+            }
+            NetworkState.ERROR -> {
+                loading_layout.gone()
+                createDialog(this, "ERROR", "An error occurred.")
+            }
+            NetworkState.NO_CONNECTION -> {
+                loading_layout.gone()
+                createDialog(this, "ERROR", "Please, check your internet connection.")
+            }
         }
     }
 
@@ -137,16 +107,6 @@ class QuestionsActivity : AppCompatActivity() {
         rv_questions.adapter = adapter
     }
 
-    private val itemClick: (question: Question) -> Unit = { question ->
-        adapter.removeItemClick()
-        openQuestionDetailsScreen(question)
-    }
-
-    fun openQuestionDetailsScreen(question: Question) {
-        val fragment = QuestionDetailsFragment.newInstance(question)
-        addFragment(fragment, R.id.questions_list_layout, QuestionDetailsFragment.TAG, true)
-        cv_search.gone()
-    }
     private fun replaceSubscription(filter: String? = null) {
         questionsViewModel.replaceSubscription(this, filter)
         startListening()
@@ -157,5 +117,16 @@ class QuestionsActivity : AppCompatActivity() {
             adapter.submitList(it)
             adapter.notifyDataSetChanged()
         })
+    }
+
+    private val itemClick: (question: Question) -> Unit = { question ->
+        adapter.removeItemClick()
+        openQuestionDetailsScreen(question)
+    }
+
+    fun openQuestionDetailsScreen(question: Question) {
+        val fragment = QuestionDetailsFragment.newInstance(question)
+        addFragment(fragment, R.id.questions_list_layout, QuestionDetailsFragment.TAG, true)
+        cv_search.gone()
     }
 }

@@ -1,5 +1,6 @@
 package br.pprojects.questioncollectionapp.ui
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import br.pprojects.questioncollectionapp.R
 import br.pprojects.questioncollectionapp.data.model.Choice
 import kotlinx.android.synthetic.main.item_choice.view.*
 
-class ChoiceAdapter(private val choices: List<Choice>) : RecyclerView.Adapter<ChoiceAdapter.ViewHolder>() {
+class ChoiceAdapter(private val context: Context, private val choices: List<Choice>) : RecyclerView.Adapter<ChoiceAdapter.ViewHolder>() {
     private var itemClick: (choice: Choice) -> Unit = {}
     private var radioButtonClick: (position: Int) -> Unit = {}
     var currentItemPosition: Int? = null
@@ -22,7 +23,7 @@ class ChoiceAdapter(private val choices: List<Choice>) : RecyclerView.Adapter<Ch
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(choices[position], itemClick, radioButtonClick)
+        holder.bind(context, choices[position], itemClick, radioButtonClick)
         currentItemPosition = position
     }
 
@@ -38,12 +39,14 @@ class ChoiceAdapter(private val choices: List<Choice>) : RecyclerView.Adapter<Ch
         val choiceLayout: ConstraintLayout = item.choice_layout
         val choiceTextView: TextView = item.tv_choice
         val choiceRadioButton: RadioButton = item.rb_choice
+        val votesTextView: TextView = item.tv_votes
 
-        fun bind(choice: Choice, itemClick: (choice: Choice) -> Unit, radioButtonClick: (position: Int) -> Unit) {
+        fun bind(context: Context, choice: Choice, itemClick: (choice: Choice) -> Unit, radioButtonClick: (position: Int) -> Unit) {
             choiceLayout.setOnClickListener {
                 itemClick(choice)
             }
             choiceTextView.text = choice.choice
+            votesTextView.text = String.format(context.getString(R.string.votes), choice.votes.toString())
 
             choiceRadioButton.setOnClickListener {
                 choiceRadioButton.isChecked = !choiceRadioButton.isChecked

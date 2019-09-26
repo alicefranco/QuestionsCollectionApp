@@ -56,10 +56,12 @@ class QuestionDetailsFragment : Fragment() {
         }
 
         question?.choices?.let {
-            adapter = ChoiceAdapter(it)
-            adapter.setRadioButtonClick(radioButtonClick)
-            rv_answers.layoutManager = linearLayoutManager
-            rv_answers.adapter = adapter
+            context?.let { context ->
+                adapter = ChoiceAdapter(context, it)
+                adapter.setRadioButtonClick(radioButtonClick)
+                rv_answers.layoutManager = linearLayoutManager
+                rv_answers.adapter = adapter
+            }
         }
 
         questionDetailsViewModel.loading.observe(this, Observer {
