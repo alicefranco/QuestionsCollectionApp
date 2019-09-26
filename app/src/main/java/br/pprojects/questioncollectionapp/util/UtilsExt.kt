@@ -8,7 +8,7 @@ import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import java.text.SimpleDateFormat
-import java.util.Locale
+import java.util.*
 
 fun View?.visible() {
     this?.visibility = View.VISIBLE
@@ -54,4 +54,15 @@ fun String.formatString(originalFormat: String, finalFormat: String): String {
     } ?: run {
         return ""
     }
+}
+
+fun createTimer(call: () -> Unit, delay: Long, period: Long) {
+    val timer = Timer()
+    val myTask = object : TimerTask() {
+        override fun run() {
+            call()
+        }
+    }
+
+    timer.schedule(myTask, delay, period)
 }

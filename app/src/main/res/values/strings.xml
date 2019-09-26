@@ -3,4 +3,6 @@
     <string name="app_title">Questions Collection</string>
     <string name="search_hint">search</string>
     <string name="vote">Vote</string>
+    <string name="question_subject">Question</string>
+    <string name="question_url">https://private-anon-1f5e981e41-blissrecruitmentapi.apiary-mock.com/questions/%1$s</string>
 </resources>

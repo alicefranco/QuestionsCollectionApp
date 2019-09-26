@@ -1,5 +1,6 @@
 package br.pprojects.questioncollectionapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.pprojects.questioncollectionapp.R
-import br.pprojects.questioncollectionapp.data.model.Choice
 import br.pprojects.questioncollectionapp.data.model.Question
 import br.pprojects.questioncollectionapp.util.createDialog
 import br.pprojects.questioncollectionapp.util.formatString
@@ -47,7 +47,9 @@ class QuestionDetailsFragment : Fragment() {
         tv_date.text = question?.publishedAt?.formatString("yyyy-MM-dd", "dd-MM-yyyy")
         context?.let {Glide.with(it).load(question?.imageUrl).into(iv_choice)}
 
-        iv_share.setOnClickListener {  }
+        iv_share.setOnClickListener {
+            shareQuestion()
+        }
 
         bt_vote.setOnClickListener{
             voteClick()
@@ -104,5 +106,20 @@ class QuestionDetailsFragment : Fragment() {
             }
             i++
         }
+    }
+
+    fun shareQuestion() {
+        val intent = Intent(Intent.ACTION_SEND)
+
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.question_subject))
+
+        val text = String.format(getString(R.string.question_url), question?.id.toString())
+        intent.putExtra(Intent.EXTRA_TEXT, text)
+
+        context?.packageManager?.let {
+            startActivity(intent)
+        }
+
     }
 }
