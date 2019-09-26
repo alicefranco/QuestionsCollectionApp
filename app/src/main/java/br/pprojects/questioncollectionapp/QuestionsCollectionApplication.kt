@@ -1,10 +1,7 @@
 package br.pprojects.questioncollectionapp
 
 import android.app.Application
-import br.pprojects.questioncollectionapp.di.mainModule
-import br.pprojects.questioncollectionapp.di.networkModule
-import br.pprojects.questioncollectionapp.di.questionsCollectionModule
-import br.pprojects.questioncollectionapp.di.splashModule
+import br.pprojects.questioncollectionapp.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -21,7 +18,8 @@ class QuestionsCollectionApplication : Application() {
                     splashModule,
                     mainModule,
                     networkModule,
-                    questionsCollectionModule
+                    questionsCollectionModule,
+                    questionDetailsModule
                 )
             )
         }

@@ -1,11 +1,11 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.splashScreen
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import br.pprojects.questioncollectionapp.R
+import br.pprojects.questioncollectionapp.ui.questionsList.QuestionsActivity
 import br.pprojects.questioncollectionapp.util.createDialog
 import br.pprojects.questioncollectionapp.util.gone
 import br.pprojects.questioncollectionapp.util.invisible

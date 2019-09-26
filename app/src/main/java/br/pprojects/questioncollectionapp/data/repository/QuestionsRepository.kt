@@ -13,6 +13,7 @@ interface QuestionsRepository {
     suspend fun listQuestions(limit: Int, offset: Int, filter: String? = null): ResultAPI<List<Question>>
     suspend fun searchQuestion(questionId: Int): ResultAPI<Question>
     suspend fun shareQuestion(emailDestination: String, contentUrl: String): ResultAPI<Status>
+    suspend fun updateQuestion(question: Question): ResultAPI<Status>
 }
 
 class QuestionsRepositoryImpl(private val apiService: ApiService) : QuestionsRepository, KoinComponent {
@@ -34,6 +35,12 @@ class QuestionsRepositoryImpl(private val apiService: ApiService) : QuestionsRep
     // the endpoint for this method is not working
     override suspend fun shareQuestion(emailDestination: String, contentUrl: String): ResultAPI<Status> {
         val response = safeCall { apiService.shareQuestion(emailDestination, contentUrl) }
+
+        return response.result()
+    }
+
+    override suspend fun updateQuestion(question: Question): ResultAPI<Status> {
+        val response = safeCall { apiService.updateQuestion(question.id, question) }
 
         return response.result()
     }

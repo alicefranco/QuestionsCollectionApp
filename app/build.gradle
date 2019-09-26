@@ -75,6 +75,8 @@ dependencies {
 
     implementation "androidx.paging:paging-runtime:$paging_version"
 
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     ktlint "com.github.shyiko:ktlint:$ktlint_version"
 

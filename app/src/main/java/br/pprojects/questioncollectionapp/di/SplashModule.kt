@@ -1,6 +1,6 @@
 package br.pprojects.questioncollectionapp.di
 
-import br.pprojects.questioncollectionapp.ui.SplashViewModel
+import br.pprojects.questioncollectionapp.ui.splashScreen.SplashViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

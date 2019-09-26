@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.questionsList
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -12,10 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import br.pprojects.questioncollectionapp.R
 import br.pprojects.questioncollectionapp.data.model.Question
 import br.pprojects.questioncollectionapp.util.formatString
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_question.view.*
 
-
-class QuestionsAdapter : PagedListAdapter<Question, QuestionsAdapter.ViewHolder>(QuestionsDiffCalback) {
+class QuestionsAdapter(private val context: Context) : PagedListAdapter<Question, QuestionsAdapter.ViewHolder>(
+    QuestionsDiffCalback
+) {
+    private var itemClick: (question: Question) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_question, parent, false)
@@ -24,22 +27,34 @@ class QuestionsAdapter : PagedListAdapter<Question, QuestionsAdapter.ViewHolder>
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val question = getItem(position)
-        question?.let {
-            holder.bind(it)
+        question?.let {question ->
+            holder.itemView.setOnClickListener { itemClick(question) }
+            holder.bind(context, question)
         }
     }
 
-    class ViewHolder(item: View) : RecyclerView.ViewHolder(item){
-        private var questionTextView: TextView = item.tv_question
-        private var datePublishedTextView: TextView = item.tv_date_published
-        private var questionImageView: ImageView = item.iv_question
-        private var idTextView: TextView = item.tv_id
+    fun setItemClick(itemClick: (question: Question) -> Unit) {
+        this.itemClick = itemClick
+    }
 
-        fun bind(question: Question) {
+    fun removeItemClick() {
+        this.itemClick = {}
+    }
+
+    class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {
+        private val questionTextView: TextView = item.tv_question
+        private val datePublishedTextView: TextView = item.tv_date_published
+        private val questionImageView: ImageView = item.iv_question
+        private val idTextView: TextView = item.tv_id
+
+        fun bind(context: Context, question: Question) {
+
+            Glide.with(context).load(question.thumbUrl).into(questionImageView)
+
             questionTextView.text = question.question
             idTextView.text = question.id.toString()
 
-            datePublishedTextView.text = question.publishedAt.formatString("yyyy-MM-dd","dd-MM-yyyy")
+            datePublishedTextView.text = question.publishedAt.formatString("yyyy-MM-dd", "dd-MM-yyyy")
         }
     }
     companion object {
@@ -53,5 +68,4 @@ class QuestionsAdapter : PagedListAdapter<Question, QuestionsAdapter.ViewHolder>
             }
         }
     }
-
 }

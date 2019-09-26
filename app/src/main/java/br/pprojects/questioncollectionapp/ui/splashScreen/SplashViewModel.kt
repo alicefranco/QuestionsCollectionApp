@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.ui.splashScreen
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,7 +19,7 @@ class SplashViewModel(private val repository: QuestionsRepository) : ViewModel()
             val response = repository.checkHealth()
             loading.value = false
 
-            when(response) {
+            when (response) {
                 is ResultAPI.Success -> {
                     healthOk.value = true
                 }

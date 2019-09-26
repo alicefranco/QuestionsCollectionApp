@@ -1,4 +1,4 @@
-package br.pprojects.questioncollectionapp.ui
+package br.pprojects.questioncollectionapp.util
 
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PageKeyedDataSource
@@ -24,13 +24,16 @@ class QuestionDataSource(val filter: String? = null, val repository: QuestionsRe
             networkState.value = NetworkState.LOADING
             val response = repository.listQuestions(PAGE_SIZE, FIRST_ITEM, filter)
 
-            when (response){
+            when (response) {
                 is ResultAPI.Success -> {
                     callback.onResult(response.data, null, FIRST_ITEM + PAGE_SIZE)
                     networkState.value = NetworkState.DONE
                 }
-                is ResultAPI.Error, is ResultAPI.InternalError -> {
+                is ResultAPI.Error -> {
                     networkState.value = NetworkState.ERROR
+                }
+                is ResultAPI.InternalError -> {
+                    networkState.value = NetworkState.NO_CONNECTION
                 }
             }
         }
@@ -41,18 +44,20 @@ class QuestionDataSource(val filter: String? = null, val repository: QuestionsRe
             networkState.value = NetworkState.LOADING
             val response = repository.listQuestions(PAGE_SIZE, params.key, filter)
 
-            when (response){
+            when (response) {
                 is ResultAPI.Success -> {
                     callback.onResult(response.data, params.key + PAGE_SIZE)
                     networkState.value = NetworkState.DONE
                 }
-                is ResultAPI.Error, is ResultAPI.InternalError -> {
+                is ResultAPI.Error -> {
                     networkState.value = NetworkState.ERROR
+                }
+                is ResultAPI.InternalError -> {
+                    networkState.value = NetworkState.NO_CONNECTION
                 }
             }
         }
     }
 
     override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Question>) {}
-
 }
